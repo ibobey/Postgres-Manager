@@ -50,10 +50,25 @@ class PostgresManager(IManager):
 
     # Class Base Methods
     def __connect_database(self) -> NoReturn:
-        pass
+        try:
+            self.__connection = psycopg2.connect(
+                host = self.__HOST,
+                port = self.__PORT,
+                dbname = self.__DBNAME,
+                user = self.__USER,
+                password = self.__PASSWORD
+            )
+            self.cursor = self.__connection.cursor()
+
+        except OperationalError as err:
+            raise OperationalError("PGM ERR 101")
 
     def __close_database_connection(self) -> NoReturn:
-        pass
+        try:
+            self.cursor.close()
+            self.__connection.close()
+        except OperationalError:
+            raise OperationalError("PGM ERR 102")
 
     def commit(self) -> NoReturn:
         pass
