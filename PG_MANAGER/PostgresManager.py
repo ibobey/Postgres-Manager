@@ -1,13 +1,14 @@
 from PG_MANAGER.PROTOCOL.IManager import *
 
 from PG_MANAGER.QUERY.Queries import CREATE_TABLE_IF_NOT_EXISTS,SET_DEFAULT_TIMEZONE
+from PG_MANAGER.QUERY.Queries import INSERT_INTO
 
 import psycopg2.extensions
 import psycopg2
 
 from psycopg2 import OperationalError
-from psycopg2.errors import UniqueViolation, InFailedSqlTransaction
-from psycopg2.errors import InvalidDatetimeFormat, InvalidTextRepresentation
+from psycopg2.errors import UniqueViolation,
+import psycopg2.errors
 
 from dotenv import load_dotenv
 from os import getenv
@@ -97,10 +98,29 @@ class PostgresManager(IManager):
     # Arbitrary Methods
 
     def insert_into(self, data: list) -> bool:
-        pass
+        query = INSERT_INTO
+        try:
+            self.cursor.execute(query=query)
+            self.commit()
+            return True
+        except UniqueViolation:
+            self.__connection.rollback()
+            return False
+        except OperationalError:
+            raise OperationalError("PGM ERR 106")
 
     def insert_many_into(self, data: List[list]) -> bool:
-        pass
+        query = INSERT_INTO
+
+        for row in data:
+            try:
+                self.cursor.execute(query,row)
+                self.commit()
+            except UniqueViolation:
+                continue
+            except Exception:
+                raise Exception("PGM ERR 107")
+        return True
 
     def query(self) -> None:
         pass
