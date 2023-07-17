@@ -29,10 +29,11 @@ class PostgresManager(IManager):
         self.__set_credentials()
 
     def __enter__(self):
-        pass
+        self.__connect_database()
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+        self.__close_database_connection()
 
     def __repr__(self):
         pass
