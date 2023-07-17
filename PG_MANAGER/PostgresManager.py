@@ -72,7 +72,7 @@ class PostgresManager(IManager):
             raise OperationalError("PGM ERR 102")
 
     def commit(self) -> NoReturn:
-        pass
+        self.__connection.commit()
 
     def __create_table_if_not_exists(self) -> NoReturn:
         pass
