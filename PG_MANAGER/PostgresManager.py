@@ -1,6 +1,6 @@
 from PG_MANAGER.PROTOCOL.IManager import *
 
-from PG_MANAGER.QUERY.Queries import CREATE_TABLE_IF_NOT_EXISTS
+from PG_MANAGER.QUERY.Queries import CREATE_TABLE_IF_NOT_EXISTS,SET_DEFAULT_TIMEZONE
 
 import psycopg2.extensions
 import psycopg2
@@ -87,7 +87,12 @@ class PostgresManager(IManager):
             raise OperationalError("PGM ERR 104")
 
     def __set_default_timezone(self) -> NoReturn:
-        pass
+        query = SET_DEFAULT_TIMEZONE
+        try:
+            self.cursor.execute(query=query)
+            self.commit()
+        except OperationalError:
+            raise OperationalError("PGM ERR 105")
 
     # Arbitrary Methods
 
