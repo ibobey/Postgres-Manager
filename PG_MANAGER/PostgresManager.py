@@ -29,15 +29,15 @@ class PostgresManager(IManager):
     __PASSWORD: str
 
     def __init__(self):
-        self.__set_credentials()
+        self.__set_credentials()  # Set credentials initialization
 
     def __enter__(self):
-        self.__connect_database()
-        self.__create_table_if_not_exists()
+        self.__connect_database() # Auto Connect database
+        self.__create_table_if_not_exists()  # Auto Check table state
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__close_database_connection()
+        self.__close_database_connection()  # Auto Close Database Connection
 
     def __repr__(self):
         return f"A Contex Manager Class : Database {self.__DBNAME}"

@@ -1,3 +1,8 @@
+"""
+ADD YOUR SQL QUERIES IN
+
+(import manually)
+"""
 
 CREATE_TABLE_IF_NOT_EXISTS = ""
 
