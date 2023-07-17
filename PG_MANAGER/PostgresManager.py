@@ -1,9 +1,14 @@
 from PG_MANAGER.PROTOCOL.IManager import *
+
 import psycopg2.extensions
 import psycopg2
+
 from psycopg2 import OperationalError
 from psycopg2.errors import UniqueViolation, InFailedSqlTransaction
 from psycopg2.errors import InvalidDatetimeFormat, InvalidTextRepresentation
+
+from dotenv import load_dotenv
+from os import getenv
 
 
 class PostgresManager(IManager):
@@ -21,7 +26,7 @@ class PostgresManager(IManager):
     __PASSWORD: str
 
     def __init__(self):
-        pass
+        self.__set_credentials()
 
     def __enter__(self):
         pass
@@ -34,7 +39,14 @@ class PostgresManager(IManager):
 
     # Initialization Methods
     def __set_credentials(self) -> NoReturn:
-        pass
+        if load_dotenv(r"PG_MANAGER/CREDENTIALS/pg.env") is None:
+            raise FileNotFoundError("Credentials Cannot Found")
+
+        self.__HOST = getenv("HOST")
+        self.__PORT = int(getenv("PORT"))
+        self.__DBNAME = getenv("DBNAME")
+        self.__USER = getenv("USER")
+        self.__PASSWORD = getenv("PASSWORD")
 
     # Class Base Methods
     def __connect_database(self) -> NoReturn:
