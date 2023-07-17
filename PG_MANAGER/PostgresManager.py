@@ -7,7 +7,7 @@ import psycopg2.extensions
 import psycopg2
 
 from psycopg2 import OperationalError
-from psycopg2.errors import UniqueViolation,
+from psycopg2.errors import UniqueViolation
 import psycopg2.errors
 
 from dotenv import load_dotenv
