@@ -4,7 +4,8 @@
  
 # Customization 
  - Add your own sql queries into PG_MANAGER/CREDENTIALS/Queries.py
- - Add detailed exception-catching blocks 
+ - Add detailed exception-catching blocks
+ - Add more method according to your scope
    
 # To install necessary modules 
  - Run Terminal 'pip install -r requirements.txt'
