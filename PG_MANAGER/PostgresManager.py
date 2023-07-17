@@ -1,5 +1,7 @@
 from PG_MANAGER.PROTOCOL.IManager import *
 
+from PG_MANAGER.QUERY.Queries import CREATE_TABLE_IF_NOT_EXISTS
+
 import psycopg2.extensions
 import psycopg2
 
@@ -30,6 +32,7 @@ class PostgresManager(IManager):
 
     def __enter__(self):
         self.__connect_database()
+        self.__create_table_if_not_exists()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -75,9 +78,15 @@ class PostgresManager(IManager):
         self.__connection.commit()
 
     def __create_table_if_not_exists(self) -> NoReturn:
-        pass
+        query = CREATE_TABLE_IF_NOT_EXISTS
+        try:
+            self.cursor.execute(query=query)
+            self.commit()
 
-    def __set_database_default_timezone(self) -> NoReturn:
+        except OperationalError:
+            raise OperationalError("PGM ERR 104")
+
+    def __set_default_timezone(self) -> NoReturn:
         pass
 
     # Arbitrary Methods

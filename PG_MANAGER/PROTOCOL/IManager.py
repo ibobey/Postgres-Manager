@@ -35,7 +35,7 @@ class IManager(Protocol):
     def __create_table_if_not_exists(self) -> NoReturn:
         ...
 
-    def __set_database_default_timezone(self) -> NoReturn:
+    def __set_default_timezone(self) -> NoReturn:
         ...
 
     # Arbitrary Methods
