@@ -1,4 +1,4 @@
-# A Postgres Manager in Contex Manager format 
+# A Postgres Manager in Context Manager format 
  - Save your unique postgres credentials into PG_MANAGER/CREDENTIALS/pg.env file
  - Use Class into main.py
  
