@@ -46,7 +46,7 @@ class IManager(Protocol):
     def insert_many_into(self, data: List[list]) -> bool:
         ...
 
-    def query(self) -> None:
+    def query(self, query: str) -> None:
         ...
 
     def fetch_all(self) -> list:
@@ -55,8 +55,3 @@ class IManager(Protocol):
     def get_last_record(self) -> list:
         ...
 
-    def alter_record(self) -> bool:
-        ...
-
-    def delete_record(self) -> bool:
-        ...

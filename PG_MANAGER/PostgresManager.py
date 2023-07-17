@@ -1,7 +1,7 @@
 from PG_MANAGER.PROTOCOL.IManager import *
 
 from PG_MANAGER.QUERY.Queries import CREATE_TABLE_IF_NOT_EXISTS,SET_DEFAULT_TIMEZONE
-from PG_MANAGER.QUERY.Queries import INSERT_INTO
+from PG_MANAGER.QUERY.Queries import INSERT_INTO,GET_LAST_RECORD
 
 import psycopg2.extensions
 import psycopg2
@@ -40,7 +40,7 @@ class PostgresManager(IManager):
         self.__close_database_connection()
 
     def __repr__(self):
-        pass
+        return f"A Contex Manager Class : Database {self.__DBNAME}"
 
     # Initialization Methods
     def __set_credentials(self) -> NoReturn:
@@ -122,17 +122,24 @@ class PostgresManager(IManager):
                 raise Exception("PGM ERR 107")
         return True
 
-    def query(self) -> None:
-        pass
+    def query(self, query: str) -> None:
+        try:
+            self.cursor.execute(query)
+        except OperationalError:
+            raise OperationalError("PGM ERR 108")
 
     def fetch_all(self) -> list:
-        pass
+        return self.cursor.fetchall()
 
     def get_last_record(self) -> list:
-        pass
+        query = GET_LAST_RECORD
+        try:
+            self.cursor.execute(query)
+            last_record = self.cursor.fetchall()
+            return last_record
 
-    def alter_record(self) -> bool:
-        pass
+        except OperationalError:
+            raise OperationalError("PGM ERR 110")
 
-    def delete_record(self) -> bool:
-        pass
+
+
