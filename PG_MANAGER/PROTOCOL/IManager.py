@@ -1,4 +1,3 @@
-import psycopg2
 import psycopg2.extensions
 from typing import Protocol
 from typing import NoReturn,List
@@ -42,7 +41,7 @@ class IManager(Protocol):
     # Arbitrary Methods
 
     def insert_into(self, data: list) -> bool:
-        pass
+        ...
 
     def insert_many_into(self, data: List[list]) -> bool:
         ...
